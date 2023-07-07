@@ -1,0 +1,18 @@
+Build an API for the Phasionistar App
+Your API should have the following endpoints
+- Register
+- Login
+- Reset Password .....
+- Add Measurement
+- Get All Measurements
+- Get a single measurement
+- Update a measurement
+- Delete a measurement
+
+
+Search on YouTube: "How to build a CRUD API with Nodejs Expressjs"
+
+speak to a designer to build frontend for the Apllication.
+2 Learn reactjs(Next.Js)
+
+
