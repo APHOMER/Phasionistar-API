@@ -32,6 +32,7 @@ app.use(cors());
 //     next();
 // })
 
+app.use('/', console.log('THis is Phasionistar API'));
 app.use('/user', userRouter);
 app.use('/cloth', clothRouter);
 
