@@ -15,6 +15,7 @@ const cors = require('cors');
 const db = require('./db/mongoose');
 const userRouter = require('./router/user');
 const clothRouter = require('./router/cloth');
+const homeRouter = require('./router/home');
 
 
 const port = process.env.PORT || 5000;
@@ -32,7 +33,7 @@ app.use(cors());
 //     next();
 // })
 
-app.use('/', console.log('THis is Phasionistar API'));
+app.use('/', homeRouter);
 app.use('/user', userRouter);
 app.use('/cloth', clothRouter);
 
