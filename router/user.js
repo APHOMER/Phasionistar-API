@@ -36,14 +36,15 @@ router.post('/register', async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-    try { 
-        // console.log(req.body);
+    try {        
+        // checking if username exist
         const { name, email, phasionName, password } = req.body;    
         const exitingEmail = await User.findOne({ email: email });
         if(exitingEmail) {
             console.log("user with this email already exist")
             return res.status(400).send("user with this email already exist")
         }        
+        // checking if phasionName exist
         const exitingPhasionName = await User.findOne({ phasionName: phasionName });
         if(exitingPhasionName) {
             console.log("user with this phasionName already exist")
