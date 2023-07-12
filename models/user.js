@@ -24,7 +24,7 @@ const userSchema = new Schema({
     
     phasionName: {
         type: String,
-        unique: true,
+        unique: [true, 'A user with the phasionName provided already exit'],
         trim: true,
         lowercase: true,
         required: true,
