@@ -44,7 +44,7 @@ app.use('/cloth', clothRouter);
 
 
 app.listen(port, () => {
-    console.log(`phasion-api is running on port ${port}`)
+    console.log(`PHASIONISTAR-API is running on port ${port}`)
 })
 
 // /users/USER/Desktop/coded/mongodbzip/bin/mongod.exe --dbpath=/users/USER/DESKTOP/DATABASES/PHASIONISTARDB
