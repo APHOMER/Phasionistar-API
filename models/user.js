@@ -29,13 +29,13 @@ const userSchema = new Schema({
         lowercase: true,
         required: true,
         minlength: [4, 'PhasionName length must be greater than four'],
-        maxlength: [15, 'PhasionName length must not be greater than fiftheen characters']
+        maxlength: [15, 'PhasionName length must not be greater than fiftheen(15) characters']
     },
     
     password: {
         type: String,
         required: true,
-        maxlength: [1024, 'Password length must be greater than 10'],
+        maxlength: [1024, 'Password length must be lesser than 1000 characters'],
         minlength: [5, 'Password length must be greater than 5'],
         trim: true,
     },
