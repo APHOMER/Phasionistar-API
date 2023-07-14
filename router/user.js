@@ -7,6 +7,7 @@ const { registerUserSchema, loginUserSchema } = require('../validations/user');
 const auth = require('../middleware/authentication');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');  //@8.5.1
+const sendMail = require('../utils/email');
 
 // Getting the current user MOSH
 // router.get('/me', auth, async (req, res) => {
@@ -184,7 +185,45 @@ router.delete('/me', auth, async (req, res) => {
     }
 })
 
+router.post('/forgotpassword', async (req, res) => {
+    // Get User based on User Email
+    const user = await User.findOne({ email: req.body.email });
 
+    if(!user) return res.status(401).send('User not found');
+
+    // GENERATE A RANDOM TOKEN.
+    const resetToken = user.createResetPasswordToken();
+
+    await user.save({ validateBeforeSave: false });
+
+    // SEND THE TOKEN BACK TO THE USER EMAIL
+    // const resetUrl = `${req.protocol}://${req.get('host')}/phasionistar-api/users/resetpassword/${resetToken}`;
+    const resetUrl = `${req.protocol}://${req.get('host')}/users/resetpassword/${resetToken}`;
+    // const resetUrl = `${req.protocol}://${req.get('host')}/https://phasionistar-api.onrender.com/users/resetpassword/${resetToken}`;
+
+    const message = `We have recieved a password reset request. Please click on the link below to reset your password\n\n${resetUrl}\n\n This link will become invalid after 10 minutes.`;
+    try {
+        await sendMail({
+            email: user.email,
+            subject: 'Password change request recieved',
+            message: message
+        })
+
+        res.status(200).send('password reset link has been sent to the user email');
+    } catch (error) {
+        console.log(error);
+        user.passwordResetToken = undefined;
+        user.passwordResetTokenExpires = undefined;
+        // res.send(error);
+        return res.status(500).send('there was an error sending email due to:' + error);
+    }
+    
+})
+
+router.patch('/resetpassword/:token', (req, res) => {
+
+    console.log('resetpassword is here')
+})
 
 module.exports = router;
 
