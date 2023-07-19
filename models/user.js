@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Cloth = require('./cloth')
+const Cloth = require('./cloth');
+const { func } = require('@hapi/joi');
+const crypto = require('crypto');
 
 const userSchema = new Schema({
     name: {
@@ -39,6 +41,9 @@ const userSchema = new Schema({
         minlength: [5, 'Password length must be greater than 5'],
         trim: true,
     },
+    // passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetTokenExpires: Date,
     tokens: [{
         token: {
             type: String,
@@ -72,7 +77,9 @@ userSchema.methods.generateAuthToken = async function(){
     try {   //generateAuthToken
         
         const user = this;
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN_SECRET);
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN_SECRET, 
+            // { expiresIn: 10mins    }
+        );
         user.tokens = user.tokens.concat({ token });
         await user.save();
     
@@ -132,11 +139,23 @@ userSchema.pre('save', async function (next) {
 
     if(user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 8);
+
     }
     next();
 })
 
 
+userSchema.methods.createResetPasswordToken = function(){
+    // const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetToken = crypto.randomBytes(32, this.toString('hex'));
+
+    this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    this.passwordResetTokenExpires = Date.now() * 10 * 60 * 1000;
+
+    console.log(resetToken, this.passwordResetToken)
+
+    return resetToken;
+}
 
 
 const User = mongoose.model('User', userSchema)
