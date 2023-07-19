@@ -34,7 +34,12 @@ const ClothSchema = new Schema ({
         minLength: [8, 'is shorter than the minimum allowed length (8)'],
         maxLength: [11, 'is longer than the maximum length (11) allowed']
     },
-    clothImages:[ImageSchema],
+    // clothImages:[ImageSchema],
+    clothImages: {
+        type: String,
+        required: true,
+        default: 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fplay-lh.googleusercontent.com%2F1-hPxafOxdYpYZEOKzNIkSP43HXCNftVJVttoo4ucl7rsMASXW3Xr6GlXURCubE1tA%3Dw3840-h2160-rw&tbnid=mNvT3T4Zgwn3FM&vet=12ahUKEwiEucnp4pqAAxXimScCHaWUCJEQMygBegUIARDnAQ..i&imgrefurl=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdev%3Fid%3D5700313618786177705%26hl%3Den_US%26gl%3DUS&docid=x_hf6-7_nBDr_M&w=3840&h=2160&q=google&ved=2ahUKEwiEucnp4pqAAxXimScCHaWUCJEQMygBegUIARDnAQ'
+    },
     measurements: {
         type: String,
         enum: ['inches', 'centimeter', 'meter'],
