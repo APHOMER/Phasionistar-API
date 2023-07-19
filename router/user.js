@@ -7,6 +7,7 @@ const auth = require('../middleware/authentication');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');  //@8.5.1
 const sendMail = require('../utils/email');
+const crypto = require('crypto');
 
 // Getting the current user MOSH
 // router.get('/me', auth, async (req, res) => {
@@ -219,9 +220,37 @@ router.post('/forgotpassword', async (req, res) => {
     
 })
 
-router.patch('/resetpassword/:token', (req, res) => {
+router.patch('/resetpassword/:token', async (req, res) => {
+    try {
+        //  IF THE USER EXISTS WITH THE GIVEN TOKEN & TOKEN HAS NOT EXPIRED
+        const token = crypto.createHash('sha256').update(req.params.token).digest('hex');
+        const user = User.findOne({ passwordResetToken: token, passwordResetTokenExpires: { $gt: Date.now() }});
+    
+        if(!user) {
+            if(!user) return res.status(401).send('Token is Invalid or Expired');
+           
+        }
+        
+        // RESETTING THE USER PASSWORD
+        user.password = req.body.password;
+        user.confirmPassword = req.body.confirmPassword;
+        user.passwordResetToken = undefined;
+        user.passwordResetTokenExpires = undefined;
+        // user.passwordChangedAt = Date.now();
 
-    console.log('resetpassword is here')
+        user.save();
+
+        const loginToken = await user.generateAuthToken();
+
+        res.status(200).send({ 
+            token: loginToken
+         });
+        console.log('resetpassword is here')
+        
+    } catch (error) {
+        console.log(`error: ${error}`)
+        res.status().send(error);
+    }
 })
 
 module.exports = router;
