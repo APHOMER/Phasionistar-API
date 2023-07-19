@@ -6,6 +6,47 @@ const { registerClothSchema } = require('../validations/cloth');
 const Joi = require('@hapi/joi');
 const User = require('../models/user');
 
+const cloudinary = require('cloudinary').v2;
+
+const multer = require('multer');
+
+// Replace these values with your Cloudinary account credentials
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_KEY, 
+    api_secret: process.env.CLOUDINARY_SECRET
+  });
+
+
+const upload = multer({ dest: 'uploads/' });
+
+router.put('/update/clothImage/:id', auth, upload.single('image'), async (req, res) => {
+  try {
+
+        // UPLOAD IMAGE TO CLOUDINARY
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'Phasionistar-API/'
+          });
+    // RETRIEVE THE SECURE URL OF THE UPLOADER IMAGE
+    const secureUrl = result.secure_url;
+    const updateClothImage = {
+        $set: { clothImage: secureUrl }
+      };
+
+     const cloth = await Cloth.findByIdAndUpdate({_id: req.params.id}, updateClothImage)
+     
+     cloth.save()
+    res.status(200).json({ secureUrl });
+  } catch (error) {
+    console.error('Error uploading image to Cloudinary:', error);
+    res.status(500).json({ error: 'Image upload failed.' });
+  }
+});
+
+
+
+
+
 
 // router.get('/test', auth, (req, res) => {
 //     res.send(req.user);
@@ -21,8 +62,6 @@ router.get('/', auth, async(req, res) => {
         clothes.forEach((cloth) => {
             console.log(cloth.ownerName.toUpperCase());
         })
-        // console.log(clothes.);
-        // res.send( req.user.clothes );
         res.status(200).json({clothes});
     } catch (error) {
         console.log('MESSAGE :', error)
@@ -47,10 +86,11 @@ router.post('/', auth, async(req, res) => {
         }
     } catch (error) {
         console.log(error);
+        res.send(error);
     }
 
     try {
-        // const { ownerName, contact, price, deposit, deliveryDate, measurements, clothImages, leg, neck, waist, shoulder, arm,  chest, bicep, wrist, back, stomach, hip, thigh } = req.body
+        // const { ownerName, contact, price, deposit, deliveryDate, measurements, leg, neck, waist, shoulder, arm,  chest, bicep, wrist, back, stomach, hip, thigh } = req.body
         // const cloth = new Cloth({ ownerName, contact, price, deposit, deliveryDate, measurements, clothImages, leg, neck, waist, shoulder, arm,  chest, bicep, wrist, back, stomach, hip, thigh, designer: req.user._id }) //.populate('owner');
         const cloth = new Cloth({ ...req.body, designer: req.user._id })
         await cloth.save();
@@ -61,7 +101,8 @@ router.post('/', auth, async(req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).send({
-            message: properties.message
+            error
+            // message: properties.message
         })
     }
 })
@@ -95,11 +136,7 @@ router.put('/:id', auth, async(req, res) => {
             console.log(`cloth with this id ${id} is not available.`)
             res.status(404).json({ message: `cloth with this id ${id} is not available.` })
         }
-
-        // const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }))
-        // cloth.clothImages.push(...imgs);
         cloth.save();
-
         console.log(cloth);
         res.status(205).json({cloth});
         
@@ -127,10 +164,7 @@ router.delete('/:id', auth, async(req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({message: error.message})
-
     }
-
-    
 })
 
 
