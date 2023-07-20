@@ -22,7 +22,6 @@ const upload = multer({ dest: 'uploads/' });
 
 router.put('/update/clothImage/:id', auth, upload.single('image'), async (req, res) => {
   try {
-
         // UPLOAD IMAGE TO CLOUDINARY
         const result = await cloudinary.uploader.upload(req.file.path, {
             folder: 'Phasionistar-API/'
