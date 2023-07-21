@@ -44,14 +44,6 @@ router.put('/update/clothImage/:id', auth, upload.single('image'), async (req, r
 
 
 
-
-
-
-// router.get('/test', auth, (req, res) => {
-//     res.send(req.user);
-//     const user = User.findOne({ _id: req.user });
-// })
-
 // GET ALL CLOTH MEASURENT
 router.get('/', auth, async(req, res) => {
     try {
