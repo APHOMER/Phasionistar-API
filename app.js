@@ -10,7 +10,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
-const cors = require('cors');
+const cors = require('cors'); // SHOULD BE BEFORE ALL APIs
 
 const db = require('./db/mongoose');
 const userRouter = require('./router/user');
@@ -23,7 +23,9 @@ const port = process.env.PORT || 5000;
 // MIDDLEWARES.........
 app.use(bodyParser.urlencoded({ extended: false })); // x-ww-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:3000"
+}));
 
 // CORS SETTINGS
 app.use((req, res, next) => {
