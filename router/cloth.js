@@ -100,7 +100,7 @@ router.get('/:id', auth, async (req, res) => {
         // const user = User.findOne({ _id: req.user._id })
         console.log(cloth);
         // console.log(user);
-        res.status(200).send({cloth});
+        res.status(200).send({cloth, id });
         // res.status(200).json({cloth});
 
     } catch (error) {
