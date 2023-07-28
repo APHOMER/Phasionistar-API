@@ -80,10 +80,13 @@ userSchema.methods.generateAuthToken = async function(){
         const token = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN_SECRET, 
             // { expiresIn: 10mins    }
         );
+
         user.tokens = user.tokens.concat({ token });
         await user.save();
     
-        console.log(token)
+        // console.log(token)
+        res.cookie('jwt', token, { httpOnly: true });
+
         return token;
         
     } catch (error) {
