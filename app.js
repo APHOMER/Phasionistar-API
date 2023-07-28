@@ -10,7 +10,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
-const cors = require('cors'); // SHOULD BE BEFORE ALL APIs
+// const cors = require('cors'); // SHOULD BE BEFORE ALL APIs
+app.use[cors({ origin: 'https://localhost:4000', credentials: true })];
 
 const db = require('./db/mongoose');
 const userRouter = require('./router/user');
@@ -31,9 +32,19 @@ app.use(cors({
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // X-HTTP-Method-Override
+    res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 })
+
+// ALTERNATIVE
+// app.use(
+//     cors({
+//         allowedHeaders: "*",
+//         allowMethods: "*",
+//         origin: "*"
+//     })
+// );
 
 app.use('/', homeRouter);
 app.use('/user', userRouter);
