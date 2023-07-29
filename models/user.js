@@ -87,7 +87,7 @@ userSchema.methods.generateAuthToken = async function(){
         // console.log(token)
         res.cookie('jwt', token, { httpOnly: true });
 
-        return token;
+        return res.json({ token });
         
     } catch (error) {
         console.log(error);
