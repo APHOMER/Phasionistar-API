@@ -85,7 +85,7 @@ userSchema.methods.generateAuthToken = async function(){
         await user.save();
     
         // console.log(token)
-        res.cookie('jwt', token, { httpOnly: true });
+        // res.cookie('jwt', token, { httpOnly: true });
 
         return res.json({ token });
         
