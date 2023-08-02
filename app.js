@@ -10,7 +10,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
-// const cors = require('cors'); // SHOULD BE BEFORE ALL APIs
+const cors = require('cors'); // SHOULD BE BEFORE ALL APIs
 app.use[cors({ origin: 'https://localhost:4000', credentials: true })];
 
 const db = require('./db/mongoose');
@@ -60,4 +60,4 @@ app.listen(port, () => {
     console.log(`PHASIONISTAR-API is running on port ${port}`)
 })
 
-// /users/USER/Desktop/coded/mongodbzip/bin/mongod.exe --dbpath=/users/USER/DESKTOP/DATABASES/PHASIONISTARDB
+// /users/USER/Desktop/coded/mongodbzip/bin/mongod.exe --dbpath=/users/USER/DESKTOP/DATABASES/API-PHASIONISTARDB
