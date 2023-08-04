@@ -59,6 +59,7 @@ router.post('/register', async (req, res) => {
         await user.save();
 
         console.log('this is POST user', user);
+        console.log(res);
         res.status(201).send({ user, token });
             
         // const user =  new User({ ...req.body });               
@@ -86,8 +87,8 @@ router.post('/login', async (req, res) => {
         const user = await User.findOne({ phasionName: phasionName });
         if(!user) {
             console.log('no user with this phasionName');
-            // return res.send('no user with this phasionName')
-            throw new Error('no user with this phasionName')
+            return res.send('no user with this phasionName')
+            // throw new Error('no user with this phasionName')
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
