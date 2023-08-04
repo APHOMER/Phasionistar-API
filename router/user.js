@@ -94,7 +94,8 @@ router.post('/login', async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         
         if(!isMatch) {
-                throw new Error('Password Mismatched');
+            res.status(500).send({message: error.message});
+                // throw new Error('Password Mismatched');
         } 
         // const user = await User.findByCredendials(phasionName, password);
         const token = await user.generateAuthToken();
