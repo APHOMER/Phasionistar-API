@@ -147,7 +147,6 @@ userSchema.pre('save', async function (next) {
     next();
 })
 
-
 userSchema.methods.createResetPasswordToken = function(){
     // const resetToken = crypto.randomBytes(32).toString('hex');
     const resetToken = crypto.randomBytes(32, this.toString('hex'));
@@ -162,7 +161,6 @@ userSchema.methods.createResetPasswordToken = function(){
 
 
 const User = mongoose.model('User', userSchema)
-// // const User = new mongoose.model('User', userSchema) // no need of "NEW"
 
 
 module.exports = User;
