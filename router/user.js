@@ -293,9 +293,7 @@ module.exports = router;
 //         await user.save();
 
 //         res.send({ user, token });
-//         // res.header('auth-token', token).send({ token, user });
 
-//         // res.send(`you are logged in with ${user.name} `)
 //     } catch (error) {
 //         console.log(error);
 //         res.send(error);
