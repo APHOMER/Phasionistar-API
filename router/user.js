@@ -59,13 +59,13 @@ router.post('/register', async (req, res) => {
         await user.save();
 
         console.log('this is POST user', user);
-        console.log(res);
         res.status(201).send({ user, token });
             
         // const user =  new User({ ...req.body });               
     } catch (error) {
         console.log(error);
-        res.status(500).send({message: error.message}); //.json({message: error.message})
+        // res.status(500).send({message: error.message}); //.json({message: error.message})
+        res.status(500).send(error);
     }
 })
 
