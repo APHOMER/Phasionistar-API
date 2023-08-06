@@ -20,6 +20,7 @@ const homeRouter = require('./router/home');
 
 const port = process.env.PORT || 5000;
 
+
 // MIDDLEWARES.........
 app.use(bodyParser.urlencoded({ extended: false })); // x-ww-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
