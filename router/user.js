@@ -36,6 +36,7 @@ router.post('/register', async (req, res) => {
         }
     } catch (error) {
         console.log(error);
+        res.status(400).send(error); // I didn't add this part before
     }
     try {        
         // checking if username exist
@@ -64,8 +65,8 @@ router.post('/register', async (req, res) => {
         // const user =  new User({ ...req.body });               
     } catch (error) {
         console.log(error);
-        // res.status(500).send({message: error.message}); //.json({message: error.message})
-        res.status(500).send(error);
+        res.status(500).send({message: error.message}); //.json({message: error.message})
+        // res.status(500).send(error);
     }
 })
 
