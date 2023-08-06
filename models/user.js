@@ -73,7 +73,7 @@ userSchema.methods.toJSON = function() {
 }
 
 // INSTANCE METHOD
-userSchema.methods.generateAuthToken = async function(req, res){ // added res to be defined
+userSchema.methods.generateAuthToken = async function(){ // added res to be defined
     try {   //generateAuthToken
         
         const user = this;
@@ -87,7 +87,7 @@ userSchema.methods.generateAuthToken = async function(req, res){ // added res to
         // console.log(token)
         // res.cookie('jwt', token, { httpOnly: true });
 
-        return res.json({ token });
+        return res.send({ token });
         
     } catch (error) {
         console.log(error);

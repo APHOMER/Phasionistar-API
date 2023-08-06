@@ -54,6 +54,7 @@ router.post('/register', async (req, res) => {
         }
 
 
+        // const user =  new User({ ...req.body });
         // const user =  new User({ name, email, phasionName, password: hashedpassword }) //.populate('owner');
         const user =  new User({ name, email, phasionName, password})
         const token = await user.generateAuthToken();
@@ -61,8 +62,7 @@ router.post('/register', async (req, res) => {
 
         console.log('this is POST user', user);
         res.status(201).send({ user, token });
-            
-        // const user =  new User({ ...req.body });               
+                           
     } catch (error) {
         console.log(error);
         res.status(500).send({message: error.message}); //.json({message: error.message})
