@@ -73,7 +73,7 @@ userSchema.methods.toJSON = function() {
 }
 
 // INSTANCE METHOD
-userSchema.methods.generateAuthToken = async function(){ // added res to be defined
+userSchema.methods.generateAuthToken = async function() { // added res to be defined
     try {   //generateAuthToken
         
         const user = this;
@@ -82,16 +82,16 @@ userSchema.methods.generateAuthToken = async function(){ // added res to be defi
         );
 
         user.tokens = user.tokens.concat({ token });
-        await user.save();
+        return await user.save();
     
         // console.log(token)
         // res.cookie('jwt', token, { httpOnly: true });
 
-        return res.send({ token });
+        // return res.status(200).send({ token });
         
     } catch (error) {
         console.log(error);
-        res.send(error);
+        throw error;
     }
 }
 
