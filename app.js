@@ -8,6 +8,7 @@ dotenv.config();
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 const path = require('path');
 const cors = require('cors'); // SHOULD BE BEFORE ALL APIs
@@ -22,6 +23,7 @@ const port = process.env.PORT || 5000;
 
 
 // MIDDLEWARES.........
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false })); // x-ww-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
 app.use(cors({
@@ -45,6 +47,16 @@ app.use((req, res, next) => {
 //         origin: "*"
 //     })
 // );
+
+app.get('/set-cookie', (req, res) => {
+    res.cookie('phasionistar', process.env.COOKIE_VALUE, {
+            httpOnly: true,
+            secure: true,
+            domain: 'phasionistar.com'
+        })
+
+    res.send('Cookies are set');
+})
 
 app.use('/', homeRouter);
 app.use('/user', userRouter);
