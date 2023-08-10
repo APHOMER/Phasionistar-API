@@ -56,11 +56,6 @@ const userSchema = new Schema({
 })
 
 
-// userSchema.virtual('clothes', {
-//     ref: 'Cloth',
-//     localField: '_id',
-//     foreignField: 'owner'
-// });
 
 userSchema.methods.toJSON = function() {
     const user = this;
@@ -165,3 +160,11 @@ const User = mongoose.model('User', userSchema)
 
 module.exports = User;
 // module.exports.validateUser = validateUser;
+
+
+
+// userSchema.virtual('clothes', {
+//     ref: 'Cloth',
+//     localField: '_id',
+//     foreignField: 'owner'
+// });
