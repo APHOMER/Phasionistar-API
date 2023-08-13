@@ -77,10 +77,16 @@ userSchema.methods.generateAuthToken = async function() { // added res to be def
         );
 
         user.tokens = user.tokens.concat({ token });
+        res.cookie('jwt', token, {
+             httpOnly: true,
+            //  secure: true,
+            //  maxAge: 1000000,
+            //  signed: true
+             });
+             
         return await user.save();
     
         // console.log(token)
-        // res.cookie('jwt', token, { httpOnly: true });
 
         // return res.status(200).send({ token });
         
