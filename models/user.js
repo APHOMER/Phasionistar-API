@@ -73,7 +73,7 @@ userSchema.methods.generateAuthToken = async function() { // added res to be def
         
         const user = this;
         const token = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN_SECRET, 
-            // { expiresIn: 10mins    }
+            // { expiresIn: 1h    }
         );
 
         user.tokens = user.tokens.concat({ token });
@@ -83,7 +83,7 @@ userSchema.methods.generateAuthToken = async function() { // added res to be def
             //  maxAge: 1000000,
             //  signed: true
              });
-             
+
         return await user.save();
     
         // console.log(token)
