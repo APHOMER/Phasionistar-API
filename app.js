@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const express = require('express');
+const session = require('express-session'); // Session
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const app = express();
@@ -48,15 +49,26 @@ app.use((req, res, next) => {
 //     })
 // );
 
-app.get('/set-cookie', (req, res) => {
-    res.cookie('phasionistar', process.env.COOKIE_VALUE, {
-            httpOnly: true,
-            secure: true,
-            domain: 'phasionistar.com'
-        })
+// SESSION
+app.use(
+    session({
+        secret: 'Idontknowyet',
+        resave: false,
+        saveUninitialized: false,
+    })
+);
 
-    res.send('Cookies are set');
-})
+// app.get('/set-cookie', (req, res) => {
+//     res.cookie('phasionistar', process.env.COOKIE_VALUE, {
+//             httpOnly: true,
+//             secure: true,
+//             domain: 'phasionistar.com'
+//         })
+
+//     res.send('Cookies are set');
+// })
+
+
 
 app.use('/', homeRouter);
 app.use('/user', userRouter);
