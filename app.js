@@ -50,13 +50,13 @@ app.use((req, res, next) => {
 // );
 
 // SESSION
-app.use(
-    session({
-        secret: 'Idontknowyet',
-        resave: false,
-        saveUninitialized: false,
-    })
-);
+// app.use(
+//     session({
+//         secret: 'Idontknowyet',
+//         resave: false,
+//         saveUninitialized: false,
+//     })
+// );
 
 // app.get('/set-cookie', (req, res) => {
 //     res.cookie('phasionistar', process.env.COOKIE_VALUE, {
