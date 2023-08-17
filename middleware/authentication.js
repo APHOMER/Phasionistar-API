@@ -3,9 +3,10 @@ const User = require('../models/user');
 
 const auth = async (req, res, next) => {
     try {
-        const token = req.header('Authorization').replace('Bearer ', '');
-        if(!token) return res.status(401).send('Access denied, No token provided');
-        console.log(token);
+        // const token = req.header('Authorization').replace('Bearer ', '');
+        const cookies = req.cookies
+        if(!cookies.jwt) return res.status(401).send('Access denied, No token provided');
+       const token = cookies.jwt
         const decoded = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
         const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
 
