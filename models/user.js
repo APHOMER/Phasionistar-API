@@ -96,7 +96,6 @@ userSchema.methods.generateAuthToken = async function() { // added res to be def
     }
 }
 
-
 // async function findByCredentials ==> MODEL METHOD
 userSchema.statics.findByCredendials = async function(phasionName, password){
     try {
