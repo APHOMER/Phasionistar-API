@@ -319,7 +319,7 @@ module.exports = router;
 
 
         // const exitingUser = await User.find()
-        //     .or([{ email: email}, { phasionName: phasionName }])
+        //     .and([{ email: email}, { phasionName: phasionName }])
         // if(exitingUser) {
         //     console.log("user with this email or phasionName is already registered");
         //     return res.status(400).send("user with this email or phasionName is already registered");
