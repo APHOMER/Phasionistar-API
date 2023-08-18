@@ -100,6 +100,13 @@ router.post('/login', async (req, res) => {
         } 
         // const user = await User.findByCredendials(phasionName, password);
         const token = await user.generateAuthToken();
+
+          res.cookie('jwt', token, {
+             httpOnly: true,
+             secure: true,
+             maxAge: 1000000,
+             signed: true
+             });
         
         await user.save();
 
