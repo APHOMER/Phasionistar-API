@@ -15,6 +15,13 @@ const auth = async (req, res, next) => {
             throw new Error('User not found');
         }
 
+        // res.cookie('jwt', token, {
+        //      httpOnly: true,
+        //     //  secure: true,
+        //     //  maxAge: 1000000,
+        //     //  signed: true
+        //      });
+
         req.token = token;
         req.user = user;
         next()
