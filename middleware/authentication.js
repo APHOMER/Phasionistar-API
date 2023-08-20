@@ -13,6 +13,7 @@ const auth = async (req, res, next) => {
         if(!user) {
             console.log('User not found');
             throw new Error('User not found');
+            // res.clearCookie('jwt', { httpOnly: true });
         }
 
         // res.cookie('jwt', token, {
