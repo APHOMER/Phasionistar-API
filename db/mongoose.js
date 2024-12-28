@@ -7,8 +7,8 @@ mongoose.set('strictQuery', true);
 const dbUrl = process.env.ONLINE_MONGODB_URL || process.env.MONGODB_URL
 // phasionistarDB
 
-mongoose.connect(dbUrl, {
-// mongoose.connect('mongodb+srv://phasionistar:phasionistar@phasionistar.yjaev15.mongodb.net/API-PHASIONISTARDB?retryWrites=true&w=majority', {
+// mongoose.connect(dbUrl, {
+mongoose.connect('mongodb+srv://phasionistar:phasionistar@phasionistar.yjaev15.mongodb.net/API-PHASIONISTARDB?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     // useCreateIndex: true,
     // useUnifiedTopology: true,
